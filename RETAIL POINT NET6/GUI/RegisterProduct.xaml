@@ -1,0 +1,184 @@
+﻿<Window x:Class="RETAIL_POINT_NET6.GUI.RegisterProduct"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RETAIL_POINT_NET6.GUI"
+        mc:Ignorable="d"
+        Title="RegisterProduct" Height="398" Width="398"
+        Topmost="False"
+        AllowsTransparency="True"
+        Background="Transparent" 
+        ResizeMode="NoResize"
+        BorderThickness="0"
+        BorderBrush="Transparent"
+        WindowStartupLocation="CenterScreen" 
+        WindowStyle="None">
+
+    <Border BorderThickness="1.5" BorderBrush="Red" CornerRadius="7">
+        <Grid Background="White">
+
+            <Button x:Name="btnExit" Content="X" 
+                    Style="{DynamicResource RoundButtonExit}"
+                    HorizontalAlignment="Right" 
+                    Margin="0,-2,-2,0"
+                    BorderThickness="0"
+                    Foreground="WhiteSmoke"
+                    Background="#263238"  
+                    VerticalAlignment="Top" 
+                    Height="25" Width="35"                  
+                    Click="btnExit_Click"/>
+
+            <Button x:Name="btnMinimize" Content="-" 
+                HorizontalAlignment="Right" 
+                Margin="0,-2,33,0"
+                BorderThickness="0"
+                Foreground="WhiteSmoke"
+                Background="#263238"                   
+                VerticalAlignment="Top"                
+                Height="25" Width="35"/>
+
+            <Label x:Name="lblTitle"
+                Style="{DynamicResource RoundLabel}"
+                Content="REGISTER PRODUCT"
+                Width="268" Height="60" 
+                FontSize="21"
+                FontWeight="Normal" 
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                Background="#263238"
+                Foreground="WhiteSmoke" 
+                Margin="0,40,0,0"/>
+
+            <Label x:Name="lblIdProduct"
+                Content="Id:"
+                Width="96" Height="30" 
+                FontSize="12"
+                FontWeight="Normal" 
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                Background="#263252"
+                Style="{DynamicResource RoundLabel}"
+                Foreground="WhiteSmoke" 
+                Margin="29,127,0,0"/>
+
+            <TextBox x:Name="txtId" 
+                Text="" 
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" 
+                TextWrapping="Wrap" 
+                Width="210" Height="30"
+                IsEnabled="False"
+                Margin="140,127,0,0"/>
+
+            <Label x:Name="lblName"
+                Content="Name:"
+                Width="96" Height="30" 
+                FontSize="12"
+                FontWeight="Normal" 
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                Background="#263252"
+                Style="{DynamicResource RoundLabel}"
+                Foreground="WhiteSmoke" 
+                Margin="29,172,0,0"/>
+
+            <TextBox x:Name="txtName" 
+                Text="" 
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" 
+                TextWrapping="Wrap" 
+                Width="210" Height="30" 
+                KeyDown="txtName_KeyDown"
+                Margin="140,172,0,0"/>
+
+
+            <Label x:Name="lblDescription"
+                Content="Description:"
+                Width="96" Height="30" 
+                FontSize="12"
+                FontWeight="Normal" 
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                Background="#263252"
+                Style="{DynamicResource RoundLabel}"
+                Foreground="WhiteSmoke"                 
+                Margin="29,217,0,0"/>
+
+            <TextBox x:Name="txtDescription" 
+                Text="" 
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" 
+                TextWrapping="Wrap" 
+                Width="210" Height="30"
+                IsEnabled="False"
+                KeyDown="txtDescription_KeyDown"
+                Margin="140,217,0,0"/>
+
+            <Label x:Name="lblPrice"
+                Content="Price:"
+                Width="96" Height="30" 
+                FontSize="12"
+                FontWeight="Normal" 
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                Background="#263252"
+                Style="{DynamicResource RoundLabel}"
+                Foreground="WhiteSmoke"
+                Margin="29,262,0,0"/>
+
+            <TextBox x:Name="txtPrice" 
+                Text="" 
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" 
+                TextWrapping="Wrap" 
+                Width="210" Height="30" 
+                IsEnabled="False"
+                KeyDown="txtPrice_KeyDown"
+                Margin="140,262,0,0"/>
+
+
+            <Button x:Name="btnRegister" Content="CONTINUE" 
+                Style="{DynamicResource RoundButton}"
+                HorizontalAlignment="Left" 
+                Margin="10,334,0,0"
+                BorderThickness="0"
+                Foreground="WhiteSmoke"
+                Background="Green"                 
+                VerticalAlignment="Top"
+                IsEnabled="False"
+                Height="44" Width="107" Click="btnRegister_Click"/>
+
+            <Button x:Name="btnCancel" Content="CANCEL" 
+                Style="{DynamicResource RoundButton}"
+                HorizontalAlignment="Left" 
+                Margin="277,333,0,0"
+                BorderThickness="0"
+                Foreground="WhiteSmoke"
+                Background="DarkRed"                 
+                VerticalAlignment="Top" 
+                Height="45" Width="108"
+                Click="btnCancel_Click"/>
+
+
+        </Grid>
+    </Border>
+</Window>

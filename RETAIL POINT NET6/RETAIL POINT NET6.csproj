@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <RootNamespace>RETAIL_POINT_NET6</RootNamespace>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BarcodeLib" Version="2.4.0" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.0.0" />
+    <PackageReference Include="Telegram.Bot" Version="18.0.0" />
+    <PackageReference Include="Telegram.Bot.Extensions.Polling" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="GUI\Login.xaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
+  </ItemGroup>
+
+</Project>
