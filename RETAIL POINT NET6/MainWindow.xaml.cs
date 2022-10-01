@@ -17,6 +17,8 @@ using System.Data;
 using Microsoft.Data.SqlClient;
 using RETAIL_POINT_NET6.Clases;
 using System.Windows.Controls.Primitives;
+using System.Collections.ObjectModel;
+using System.Diagnostics.Metrics;
 
 namespace RETAIL_POINT_NET6
 {
@@ -29,12 +31,13 @@ namespace RETAIL_POINT_NET6
 
 
 
+        ObservableCollection<Product> _Product = new ObservableCollection<Product>();
+
         public MainWindow(string User)
         {
             InitializeComponent();
             InitializeDgvRetailPoint();
-            InitializeDgvInventory();
-
+            //InitializeDgvInventory();
 
             GlobalUser = User;
             lblUser.Content = GlobalUser.Remove(1); 
@@ -193,29 +196,28 @@ namespace RETAIL_POINT_NET6
         {
             try
             {
-                if (From == "INVENTORY")
-                {
-                    dgStock.Items.Add(new QueryShapeInventory { IdProduct = _IdProduct, NameProduct = _NameProduct, DescriptionProduct = _DescriptionProduct, PriceProduct = _PriceProduct, StockProduct = _StockProduct });
+                //if (From == "INVENTORY")
+                //{
+                //    dgStock.Items.Add(new QueryShapeInventory { IdProduct = _IdProduct, NameProduct = _NameProduct, DescriptionProduct = _DescriptionProduct, PriceProduct = _PriceProduct, StockProduct = _StockProduct });
 
-                    try
-                    {
-                        if (dgStock.Items.Count > 0)
-                        {
-                            var border = VisualTreeHelper.GetChild(dgStock, 0) as Decorator;
-                            if (border != null)
-                            {
-                                var scroll = border.Child as ScrollViewer;
-                                if (scroll != null) scroll.ScrollToEnd();
-                            }
-                        }
+                //    try
+                //    {
+                //        if (dgStock.Items.Count > 0)
+                //        {
+                //            var border = VisualTreeHelper.GetChild(dgStock, 0) as Decorator;
+                //            if (border != null)
+                //            {
+                //                var scroll = border.Child as ScrollViewer;
+                //                if (scroll != null) scroll.ScrollToEnd();
+                //            }
+                //        }
 
-                    }
-                    catch
-                    {
+                //    }
+                //    catch
+                //    {
 
-                    }
-
-                }
+                //    }
+                //}
 
                 if (From == "RETAIL POINT")
                 {
@@ -263,14 +265,9 @@ namespace RETAIL_POINT_NET6
                 txtProductID.Clear();
             }
         }
-
-
-
         #endregion
 
         #region SECTION INVENTORY
-
-
         private static Label FindClickedItem(object sender)
         {
             var mi = sender as MenuItem;
@@ -353,11 +350,11 @@ namespace RETAIL_POINT_NET6
             StockProduct.Binding = new Binding("StockProduct");
             StockProduct.IsReadOnly = true;
 
-            dgStock.Columns.Add(IdProduct);
-            dgStock.Columns.Add(NameProduct);
-            dgStock.Columns.Add(DescriptionProduct);
-            dgStock.Columns.Add(PriceProduct);
-            dgStock.Columns.Add(StockProduct);
+            //dgStock.Columns.Add(IdProduct);
+            //dgStock.Columns.Add(NameProduct);
+            //dgStock.Columns.Add(DescriptionProduct);
+            //dgStock.Columns.Add(PriceProduct);
+            //dgStock.Columns.Add(StockProduct);
         }
 
         bool EnviromentInventory = false;
@@ -373,6 +370,7 @@ namespace RETAIL_POINT_NET6
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var _converter = new BrushConverter();
             var tab = sender as TabControl;
 
             if (tab != null)
@@ -387,8 +385,8 @@ namespace RETAIL_POINT_NET6
                     Tuple<int, DataTable> _result = SQLFunctions.QueryAllStock();
                     DataTable _dt = _result.Item2;
 
-                    dgStock.Items.Clear();
-                    dgStock.Items.Refresh();
+                    dgStockN.Items.Clear();
+                    dgStockN.Items.Refresh();
 
                     foreach (DataRow row in _dt.Rows)
                     {
@@ -399,23 +397,30 @@ namespace RETAIL_POINT_NET6
                         decimal Price = Convert.ToDecimal(row["Price"]);
                         int Stock = Convert.ToInt32(row["Stock"]);
 
+
+                        _Product.Add(new Product { Id = id, Character=Name.Substring(0,1), Name = Name, Description = Description, Price = Price, Stock = Stock, BgColor = (Brush)_converter.ConvertFromString("#1098ad") });
+
                         WriteDgv("INVENTORY", id, Name, Description, Price.ToString(), Stock.ToString());
                     }
+
+
+                    dgStockN.ItemsSource = _Product;
                 }
             }
         }
 
         private void dgStock_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (sender != null)
-            {
-                DataGrid grid = sender as DataGrid;
-                if (grid != null && grid.SelectedItems != null && grid.SelectedItems.Count == 1)
-                {
-                    DataGridRow dgr = dgStock.ItemContainerGenerator.ContainerFromItem(grid.SelectedItem) as DataGridRow;
+            //ADDING NEW DATAGRID DESIGN
+            //if (sender != null)
+            //{
+            //    DataGrid grid = sender as DataGrid;
+            //    if (grid != null && grid.SelectedItems != null && grid.SelectedItems.Count == 1)
+            //    {
+            //        DataGridRow dgr = dgStock.ItemContainerGenerator.ContainerFromItem(grid.SelectedItem) as DataGridRow;
 
-                }
-            }
+            //    }
+            //}
         }
 
         private void txtAddProduct_KeyDown(object sender, KeyEventArgs e)
@@ -445,8 +450,8 @@ namespace RETAIL_POINT_NET6
                 Tuple<int, DataTable> _result = SQLFunctions.QueryAllStock();
                 DataTable _dt = _result.Item2;
 
-                dgStock.Items.Clear();
-                dgStock.Items.Refresh();
+                dgStockN.Items.Clear();
+                dgStockN.Items.Refresh();
 
                 foreach (DataRow row in _dt.Rows)
                 {
@@ -483,12 +488,11 @@ namespace RETAIL_POINT_NET6
                 Tuple<int, DataTable> _result = SQLFunctions.QueryAllStock();
                 DataTable _dt = _result.Item2;
 
-                dgStock.Items.Clear();
-                dgStock.Items.Refresh();
+                dgStockN.Items.Clear();
+                dgStockN.Items.Refresh();
 
                 foreach (DataRow row in _dt.Rows)
                 {
-
                     string id = row["Id"] as string;
                     string Name = row["Name"] as string;
                     string Description = row["Description"] as string;
@@ -653,7 +657,10 @@ namespace RETAIL_POINT_NET6
             this.Close();
         }
 
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
     }
 }
 

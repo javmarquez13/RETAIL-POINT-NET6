@@ -33,8 +33,17 @@
 
 
 
-    <Border BorderThickness="5" BorderBrush="White" CornerRadius="5">
+    <Border Grid.Row="1" Background="White" BorderThickness="5" BorderBrush="White" CornerRadius="5">
         <Grid Background="White" MouseDown="Grid_MouseDown" Margin="0">
+
+
+            <!--<Grid Width="300" HorizontalAlignment="Left">-->
+            <!--<TextBlock Margin="-24,360,65,0" VerticalAlignment="Top" Foreground="#b0b9c6" IsHitTestVisible="False"
+                           Panel.ZIndex="1" Text="Search here..."
+                           Visibility="{Binding ElementName=txtSearch,Path=Text.IsEmpty,Converter={StaticResource BoolToVis}}">
+                <TextBox x:Name="txtSearch" Style="{StaticResource textBoxSearch}" Margin="92,24,630,0" VerticalAlignment="Top"/>
+            </TextBlock>-->
+            <!--</Grid>-->
 
             <Label x:Name="lblTitle"
                 Content="RETAIL POINT"
@@ -84,7 +93,7 @@
 
 
 
-            <TabControl x:Name="TabMenu" Margin="0,62,1,0" BorderBrush="Gainsboro" SelectionChanged="TabControl_SelectionChanged">
+            <TabControl x:Name="TabMenu" Margin="6,73,5,0" BorderBrush="Gainsboro" SelectionChanged="TabControl_SelectionChanged">
                 <TabControl.Resources>
                     <Style TargetType="TabItem">
                         <Setter Property="Template">
@@ -128,7 +137,18 @@
                                  Margin="10,14,0,0"/>
 
 
-                        <TextBox x:Name="txtProductID" 
+
+                        <TextBox x:Name="txtProductID" Height="37" Margin="121,13,518,0" 
+                                 Style="{StaticResource textBoxSearch}"
+                                 Text="Escanea Product ID..." 
+                                 GotFocus="txtProductID_GotFocus" 
+                                 LostFocus="txtProductID_LostFocus"
+                                 KeyDown="txtProductID_KeyDown" VerticalAlignment="Top"/>
+
+                        <Icon:PackIconMaterial Kind="Magnify" Width="24" Height="18"
+                                   Margin="322,24,0,0" Foreground="#b0b9c6" RenderTransformOrigin="0.042,0.556"/>
+
+                        <!--<TextBox x:Name="txtProductID" 
                                  Text="Escanea Product ID..." 
                                  HorizontalContentAlignment="Center"
                                  VerticalContentAlignment="Center"
@@ -139,7 +159,7 @@
                                  Width="239" Height="30" 
                                  GotFocus="txtProductID_GotFocus" 
                                  LostFocus="txtProductID_LostFocus"
-                                 KeyDown="txtProductID_KeyDown"/>
+                                 KeyDown="txtProductID_KeyDown"/>-->
 
 
                         <Label x:Name="lblProductDescription"
@@ -158,7 +178,7 @@
 
 
                         <DataGrid x:Name="dgRetailPoint"                       
-                                  Margin="10,108,10,0" Height="404" 
+                                  Margin="10,108,10,0" Height="382" 
                                   VerticalAlignment="Top"                               
                                   LoadingRow="dgRetailPoint_LoadingRow"
                                   MouseDoubleClick="dgRetailPoint_MouseDoubleClick" RenderTransformOrigin="0.5,0.5">
@@ -172,6 +192,7 @@
                             </DataGrid.RenderTransform>
                         </DataGrid>
 
+            
                         <Label x:Name="lblTotalAmount"
                             Content="Total: "
                             Width="194" Height="30" 
@@ -220,11 +241,65 @@
                             Margin="10,14,0,0"/>
 
 
-                        <DataGrid x:Name="dgStock"                       
-                            Margin="10,136,10,0" Height="438" 
+                        <!--<DataGrid x:Name="dgStock"                       
+                            Margin="10,136,10,0" Height="376" 
                             VerticalAlignment="Top"
                             LoadingRow="dgStock_LoadingRow"
-                            MouseDoubleClick="dgStock_MouseDoubleClick"/>
+                            MouseDoubleClick="dgStock_MouseDoubleClick"/>-->
+
+
+                        <!-- Members DataGrid-->
+                        <DataGrid x:Name="dgStockN" Style="{DynamicResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" RowStyle="{DynamicResource DataGridRowStyle1}" Margin="10,146,10,83">
+                            <DataGrid.Columns>
+                                <DataGridCheckBoxColumn CanUserReorder="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}" >
+                                    <DataGridCheckBoxColumn.HeaderTemplate>
+                                        <DataTemplate>
+                                            <CheckBox Style="{StaticResource CheckBoxStyle1}"/>
+                                        </DataTemplate>
+                                    </DataGridCheckBoxColumn.HeaderTemplate>
+                                </DataGridCheckBoxColumn>
+
+                                <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="auto" Binding="{Binding Number}"/>
+
+                                <DataGridTemplateColumn Header="Character" IsReadOnly="True" Width="*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Border Width="25" Height="25" CornerRadius="50" Margin="0 0 10 0" Background="{Binding BgColor}">
+                                                    <TextBlock Text="{Binding Character}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Margin="0 0 0 1"/>
+                                                </Border>
+
+                                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTextColumn Header="Id" IsReadOnly="True" Width="*" Binding="{Binding Id}"/>
+                                <!--<DataGridTextColumn Header="Name" IsReadOnly="True" Width="*" Binding="{Binding Name}"/>-->
+                                <DataGridTextColumn Header="Description" IsReadOnly="True" Width="*" Binding="{Binding Description}"/>
+                                <DataGridTextColumn Header="Price" IsReadOnly="True" Width="*" Binding="{Binding Price}"/>
+                                <DataGridTextColumn Header="Stock" IsReadOnly="True" Width="*" Binding="{Binding Stock}"/>
+
+                                <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Button x:Name="EditButton" Style="{StaticResource gridEditButton}" Click="EditButton_Click">
+                                                    <Icon:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}"/>
+                                                </Button>
+
+                                                <Button Style="{StaticResource gridRemoveButton}" Margin="5 0 0 0">
+                                                    <Icon:PackIconMaterial Kind="DeleteOutline" Style="{StaticResource gridButtonIcon}"/>
+                                                </Button>
+
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
 
                         <Label x:Name="lblInventory"
                             Content="Product Stock"
@@ -264,6 +339,42 @@
                             <ComboBoxItem Content="Register new Product"/>
                             <ComboBoxItem Content="Delete old Product"/>
                         </ComboBox>
+
+
+                        <Border HorizontalAlignment="Left" BorderBrush="#dee4ec" BorderThickness="1"
+                                CornerRadius="5" Padding="5" Background="White" Margin="555,517,0,10">
+
+
+                            <StackPanel Orientation="Horizontal">
+                                <Button Style="{StaticResource pagingButton}">
+                                    <Icon:PackIconMaterial Kind="ChevronLeft"/>
+                                </Button>
+
+                                <Rectangle Width="3" Fill="#dee4ec" Margin="3 7"/>
+
+                                <Button Style="{StaticResource pagingButton}" Content="1"/>
+                                <Button Style="{StaticResource pagingButton}" Content="2" Background="#7950f2" Foreground="#FFFFFF"/>
+                                <Button Style="{StaticResource pagingButton}" Content="3"/>
+
+                                <TextBlock Text="..." Foreground="#6c7682" VerticalAlignment="Center" FontSize="15" Margin="10 0"/>
+
+                                <Button Style="{StaticResource pagingButton}" Content="4"/>
+                                <Button Style="{StaticResource pagingButton}" Content="5" Background="#7950f2" Foreground="#FFFFFF"/>
+                                <Button Style="{StaticResource pagingButton}" Content="6"/>
+
+
+                                <Button Style="{StaticResource pagingButton}">
+                                    <Icon:PackIconMaterial Kind="ChevronRight"/>
+                                </Button>
+
+                                <Rectangle Width="3" Fill="#dee4ec" Margin="3 7"/>
+
+
+                            </StackPanel>
+
+
+                        </Border>
+
                     </Grid>
 
 
@@ -359,9 +470,14 @@
                     Style="{StaticResource TopButton}">
                 <Icon:PackIconMaterial Kind="Menu" Width="15" Height="15"/>
             </Button>
-
+            <Ellipse Width="15" Height="15" Margin="363,26,514,670">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="/Images/Img.png"/>
+                </Ellipse.Fill>
+            </Ellipse>
 
         </Grid>
+
     </Border>
 
 </Window>
